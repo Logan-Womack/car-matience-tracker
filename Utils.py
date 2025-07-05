@@ -28,6 +28,27 @@ def send_email(subject, body, sender_email, receiver_email, password):
         smtp_server.sendmail(sender_email, receiver_email, msg.as_string())
     print('Email sent successfully!')
 
+
+def check_maintenance_due(mileage, log_dict, frequency_dict):
+    """
+    Check if any maintenance tasks are due based on the current mileage and the maintenance log.
+    
+    Args:
+        mileage (int): Current mileage of the vehicle.
+        log_dict (dict): Dictionary containing maintenance tasks and their last performed mileage.
+        frequency_dict (dict): Dictionary containing maintenance tasks and their frequency in miles.
+    
+    Returns:
+        list: List of maintenance tasks that are due.
+    """
+    due_tasks = []
+    for task, last_mileage in log_dict.items():
+        if mileage - last_mileage >= frequency_dict[task]:
+            due_tasks.append(task)
+    return due_tasks
+
+
+
 # Example usage
 if __name__ == "__main__":
     subject = 'Daily Report'

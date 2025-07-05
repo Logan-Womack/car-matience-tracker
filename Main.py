@@ -1,6 +1,17 @@
+#Imports libraries and functions from utils files
+import pandas as pd
+import numpy as np
+import os
+from datetime import datetime
+import json
+from dotenv import load_dotenv
+load_dotenv('.env')
+import sys
+# The check_maintenance_due function will determine which maintenance tasks are due based on the current mileage and the maintenance log.
+# The send_email function will send an email with the list of due tasks.
+from Utils import send_email, check_maintenance_due
 
-
-
+#This dictionary sets the frequency standards for maintenance
 car_maintenance_tasks_frequency_dict = {
     "Oil/Oil filter change": 5000,
     "Tire Alignment": 12000,
@@ -21,3 +32,29 @@ car_maintenance_tasks_frequency_dict = {
     "Replace brake fluid": 50000,
     "Replace timing belt (if applicable)": 75000,
     "Replace coolant/antifreeze": 75000}
+
+
+with open('maintenance_Logs_JSONS\\2017_Toyota_Corolla_MLog.json', 'r') as f:
+    maintenance_log_dictionary = json.load(f)
+for task in maintenance_log_dictionary:
+    maintenance_log_dictionary[task] = int(maintenance_log_dictionary[task])
+print(maintenance_log_dictionary)
+
+try:
+    vehicle_mileage = int(input("Enter the current mileage of the vehicle: "))
+except ValueError:
+    print("Invalid input. Please enter a valid integer for mileage.")
+    sys.exit(1)
+
+
+tasks_due = check_maintenance_due(vehicle_mileage, maintenance_log_dictionary, car_maintenance_tasks_frequency_dict)
+print(f"Tasks due: {tasks_due}")
+
+subject = 'Report of Car Maintenance Tracker 2017 Toyota Corolla'
+body = f'The Following maintenance task are due on the 2017 Toyota Corolla {tasks_due}.'
+sender_email = os.getenv('email')
+receiver_email = os.getenv('email')
+password = os.getenv('python_email_connector_token')
+
+
+send_email(subject, body, sender_email, receiver_email, password)
