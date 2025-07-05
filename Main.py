@@ -33,13 +33,15 @@ car_maintenance_tasks_frequency_dict = {
     "Replace timing belt (if applicable)": 75000,
     "Replace coolant/antifreeze": 75000}
 
-
-with open('maintenance_Logs_JSONS\\2017_Toyota_Corolla_MLog.json', 'r') as f:
+# This creates a dictioary from the JSON file that contains the maintenance log for the vehicle.
+#Be sure to update this file whenver matience is performed on the vehicle.
+# The JSON file should be in the format of {"task_name": last_mileage_performed}
+with open('Matience_Logs_JSONS\\2017_Toyota_Corolla_MLog.json', 'r') as f:
     maintenance_log_dictionary = json.load(f)
 for task in maintenance_log_dictionary:
     maintenance_log_dictionary[task] = int(maintenance_log_dictionary[task])
-print(maintenance_log_dictionary)
 
+#The current milage of the vehicle will be compared to the last performed mileage of each task in the maintenance log.
 try:
     vehicle_mileage = int(input("Enter the current mileage of the vehicle: "))
 except ValueError:
@@ -48,13 +50,20 @@ except ValueError:
 
 
 tasks_due = check_maintenance_due(vehicle_mileage, maintenance_log_dictionary, car_maintenance_tasks_frequency_dict)
-print(f"Tasks due: {tasks_due}")
 
+
+# This defines the arguments of the send email function if the script errors out here check that the .env file is set up correctly, 
+# and check that your gmail has an active app password token.
 subject = 'Report of Car Maintenance Tracker 2017 Toyota Corolla'
 body = f'The Following maintenance task are due on the 2017 Toyota Corolla {tasks_due}.'
 sender_email = os.getenv('email')
 receiver_email = os.getenv('email')
 password = os.getenv('python_email_connector_token')
 
-
-send_email(subject, body, sender_email, receiver_email, password)
+if tasks_due:
+    print("Sending email with due tasks...")
+    print(f"Tasks due: {tasks_due}")
+    send_email(subject, body, sender_email, receiver_email, password)
+else:
+    print("No maintenance tasks are due at this time.")
+    sys.exit(0)
