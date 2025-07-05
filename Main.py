@@ -36,7 +36,7 @@ car_maintenance_tasks_frequency_dict = {
 # This creates a dictioary from the JSON file that contains the maintenance log for the vehicle.
 #Be sure to update this file whenver matience is performed on the vehicle.
 # The JSON file should be in the format of {"task_name": last_mileage_performed}
-with open('Matience_Logs_JSONS\\2017_Toyota_Corolla_MLog.json', 'r') as f:
+with open('Maintenance_Logs_JSONS\\2017_Toyota_Corolla_MLog.json', 'r') as f:
     maintenance_log_dictionary = json.load(f)
 for task in maintenance_log_dictionary:
     maintenance_log_dictionary[task] = int(maintenance_log_dictionary[task])
