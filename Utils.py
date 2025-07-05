@@ -7,7 +7,17 @@ import sys
 load_dotenv('.env')
 
 def send_email(subject, body, sender_email, receiver_email, password):
-    # Create the email message
+    """
+    Send an email using SMTP with the provided subject, body, sender, receiver, and password.
+    Args:
+        subject (str): Subject of the email.
+        body (str): Body content of the email.
+        sender_email (str): Email address of the sender.
+        receiver_email (str): Email address of the receiver.
+        password (str): Google App Password for the sender's email account.
+    Returns:
+        None
+    """
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = receiver_email #", ".join(receiver_email)
@@ -18,6 +28,7 @@ def send_email(subject, body, sender_email, receiver_email, password):
         smtp_server.sendmail(sender_email, receiver_email, msg.as_string())
     print('Email sent successfully!')
 
+# Example usage
 if __name__ == "__main__":
     subject = 'Daily Report'
     body = 'This is a test email sent from Python using smtplib. in the car maintenance tracker project.'
