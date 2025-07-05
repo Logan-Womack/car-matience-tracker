@@ -1,0 +1,19 @@
+{
+    "Oil/Oil filter change": "67188",
+    "Tire rotation": "67188",
+    "Check windshield wiper condition": "67188",
+    "Top off fluids (washer, brake, coolant, etc.)": "67188",
+    "Check all exterior lights": "67188",
+    "Inspect air filter": "60000",
+    "Inspect brakes": "50000",
+    "Clean battery terminals": "50000",
+    "Replace cabin air filter": "60000",
+    "Replace engine air filter": "60000",
+    "Inspect belts and hoses": "50000",
+    "Replace transmission fluid (if required)": "60000",
+    "Inspect suspension and steering components": "50000",
+    "Replace spark plugs": "50000",
+    "Replace brake fluid": "50000",
+    "Replace timing belt (if applicable)": "50000",
+    "Replace coolant/antifreeze": "50000"
+}
